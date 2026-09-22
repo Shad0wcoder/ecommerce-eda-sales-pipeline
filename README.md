@@ -1,274 +1,363 @@
 # E-Commerce Exploratory Data Analysis & Sales Pipeline
 
-An end-to-end data engineering and analytics project demonstrating
-transaction data generation, relational database modeling, SQL analytics,
-Pandas ETL, customer segmentation, cohort retention analysis and
-business-focused exploratory data analysis.
+An end-to-end e-commerce analytics project demonstrating **Python data generation, PostgreSQL database management, SQL analytics, Pandas ETL, feature engineering, customer segmentation, and business-focused exploratory data analysis**.
 
 ---
 
-## Project Overview
+## 📌 Project Overview
 
-This project simulates an e-commerce business and builds a complete
-analytics pipeline from raw transactional data to business insights.
+This project simulates an e-commerce business and builds a complete analytics workflow from **raw transactional data to actionable business insights**.
 
-The pipeline combines:
+### Tech Stack
 
-- Python
-- Pandas
-- NumPy
-- PostgreSQL / SQLite
-- SQLAlchemy
-- SQL
-- Matplotlib
-- Seaborn
-- Jupyter Notebook
-
----
-
-## Architecture
-
-Raw Data
-
-    ↓
-
-Python Data Generation
-
-    ↓
-
-CSV Transaction Layer
-
-    ↓
-
-SQLAlchemy
-
-    ↓
-
-SQLite / PostgreSQL
-
-    ↓
-
-SQL Analytics
-
-    ↓
-
-Pandas ETL
-
-    ↓
-
-Feature Engineering
-
-    ↓
-
-EDA & Visualization
-
-    ↓
-
-Business Insights
+* Python
+* Pandas
+* NumPy
+* PostgreSQL
+* SQLAlchemy
+* SQL
+* Matplotlib
+* Seaborn
+* Jupyter Notebook
 
 ---
 
-## Dataset
+## 🏗️ Project Architecture
+
+```text
+                Python
+                  │
+                  ▼
+          Data Generation
+                  │
+                  ▼
+             Raw CSV Data
+                  │
+                  ▼
+             PostgreSQL
+                  │
+          ┌───────┴────────┐
+          ▼                ▼
+     SQL Analytics      Pandas ETL
+          │                │
+          │                ▼
+          │        Feature Engineering
+          │                │
+          └───────┬────────┘
+                  ▼
+          Jupyter Notebook
+                  │
+                  ▼
+          EDA & Visualization
+                  │
+                  ▼
+          Business Insights
+```
+
+---
+
+## 📊 Dataset
 
 The synthetic dataset contains:
 
-- 5,000 unique customers
-- 300 products
-- 20,000 orders
-- Order-level transaction items
-- Payment transactions
+| Dataset     |                 Records |
+| ----------- | ----------------------: |
+| Customers   |                   5,000 |
+| Products    |                     300 |
+| Orders      |                  20,000 |
+| Order Items | Multi-item transactions |
+| Payments    |         Payment history |
 
-The generated data intentionally contains realistic data-quality
-conditions including:
+### Realistic Data Quality Scenarios
 
-- duplicate customer records
-- missing city values
-- missing shipping dates
-- missing delivery dates
-- cancelled orders
-- returned orders
-- failed payments
-- pending payments
-- skewed order values
-- variable discounts
-- uneven customer purchase frequency
+* Duplicate customer records
+* Missing city values
+* Missing shipping & delivery dates
+* Cancelled and returned orders
+* Failed & pending payments
+* Skewed order values
+* Variable discounts
+* Uneven customer purchase frequency
 
 ---
 
-## Database Schema
+## 🗄️ Database Schema
 
-### customers
+The project uses a normalized PostgreSQL database with five tables:
 
-Customer demographic and registration information.
-
-### products
-
-Product catalog, prices, costs and inventory.
-
-### orders
-
-Customer transactions and order lifecycle information.
-
-### order_items
-
-Individual products purchased within each order.
-
-### payments
-
-Payment transactions and payment statuses.
+* **customers** – Customer demographic & registration data
+* **products** – Product catalog, pricing & inventory
+* **orders** – Order lifecycle & transactions
+* **order_items** – Products purchased per order
+* **payments** – Payment methods & statuses
 
 ---
 
-## Key SQL Analytics
-
-The project demonstrates:
+## 🔎 SQL Analytics
 
 ### Window Functions
 
-- Rolling 30-day revenue
-- Customer order ranking
-- Month-over-month revenue growth
-- Customer-level order ranking
+* Rolling revenue analysis
+* Customer order ranking
+* Month-over-month revenue growth
 
-### CTEs
+### Common Table Expressions (CTEs)
 
-- Monthly customer cohorts
-- Cohort retention
-- Customer purchasing behavior
+* Cohort analysis
+* Customer retention
+* Purchasing behavior
+* Multi-step business queries
 
-### RFM
+### RFM Segmentation
 
 Customers are scored using:
 
-- Recency
-- Frequency
-- Monetary Value
+* **Recency**
+* **Frequency**
+* **Monetary Value**
 
-NTILE-based scoring is used to create customer segments.
-
----
-
-## Pandas ETL
-
-The ETL pipeline performs:
-
-- schema validation
-- duplicate removal
-- datetime conversion
-- numeric type conversion
-- missing-value treatment
-- invalid-value filtering
-- order-level aggregation
-- customer-level aggregation
+NTILE-based scoring is used to classify customer segments.
 
 ---
 
-## Feature Engineering
+## 🔄 Pandas ETL Pipeline
 
-Important analytical features include:
+`etl.py` performs:
 
-### Average Order Value
+* Schema validation
+* Duplicate removal
+* Datetime conversion
+* Numeric type conversion
+* Missing-value treatment
+* Invalid-value filtering
+* Order aggregation
+* Customer aggregation
+* Data validation
 
-    Total Revenue / Number of Orders
+Processed datasets are stored in:
 
-### Days Since Last Purchase
-
-    Analysis Date - Last Purchase Date
-
-### Customer Lifetime Value Proxy
-
-    Total Historical Customer Revenue
-
-### Shipping Days
-
-    Shipping Date - Order Date
-
-### Delivery Days
-
-    Delivery Date - Order Date
+```text
+data/processed/
+```
 
 ---
 
-## Customer Risk Segmentation
+## ⚙️ Feature Engineering
 
-Customers are classified using purchase recency.
-
-### Active
-
-Recent purchasing activity.
-
-### Watch
-
-Moderate purchasing inactivity.
-
-### At Risk
-
-90+ days since last purchase.
-
-### High Risk
-
-180+ days since last purchase.
-
-These segments can be used for customer retention analysis.
+| Feature                         | Formula                       |
+| ------------------------------- | ----------------------------- |
+| Average Order Value             | Total Revenue ÷ Orders        |
+| Days Since Last Purchase        | Analysis Date − Last Purchase |
+| Customer Lifetime Value (Proxy) | Historical Customer Revenue   |
+| Shipping Days                   | Shipping Date − Order Date    |
+| Delivery Days                   | Delivery Date − Order Date    |
 
 ---
 
-## EDA
+## 👥 Customer Risk Segmentation
 
-The project generates publication-quality visualizations including:
+Customers are classified using purchase inactivity.
 
-- monthly revenue trend
-- order value distribution
-- revenue by customer segment
-- customer revenue distribution
-- customer correlation heatmap
-- churn-risk segmentation
-- cohort retention heatmap
+| Segment      | Criteria                   |
+| ------------ | -------------------------- |
+| 🟢 Active    | Recent purchasing activity |
+| 🟡 Watch     | 60+ days inactive          |
+| 🟠 At Risk   | 90+ days inactive          |
+| 🔴 High Risk | 180+ days inactive         |
 
----
-
-## Business KPIs
-
-The analysis focuses on:
-
-### Revenue
-
-Total completed-order revenue.
-
-### Orders
-
-Number of completed transactions.
-
-### Average Order Value
-
-Average revenue per completed order.
-
-### Customer Lifetime Value Proxy
-
-Historical revenue generated by a customer.
-
-### Cancellation Rate
-
-Percentage of orders cancelled.
-
-### Payment Failure Rate
-
-Percentage of payment transactions that failed.
-
-### Customer Retention
-
-Percentage of customers returning after their first purchase.
-
-### At-Risk Customers
-
-Customers showing prolonged purchase inactivity.
+> **Note:** This is a rule-based churn-risk classification, not a machine learning model.
 
 ---
 
-## How To Run
+## 📈 Exploratory Data Analysis
+
+The notebook **`notebooks/01_ecommerce_analysis.ipynb`** includes:
+
+### Business KPIs
+
+* Total Revenue
+* Completed Orders
+* Average Order Value
+* Total Customers
+
+### Revenue Analysis
+
+* Monthly revenue trend
+* Monthly order volume
+
+### Customer Analysis
+
+* Top customers
+* Revenue by customer segment
+
+### Churn Analysis
+
+* Customer risk distribution
+* Revenue by risk group
+
+### Category Analysis
+
+* Revenue by product category
+* Items sold by category
+
+### Delivery Analysis
+
+* Shipping & delivery performance
+
+---
+
+## 💼 Business Questions Answered
+
+* How much revenue is generated from completed orders?
+* How does revenue change over time?
+* Which customer segments contribute the most revenue?
+* Who are the highest-value customers?
+* Which customers are at risk of churn?
+* Which product categories perform best?
+* How efficient is the delivery process?
+
+---
+
+## 📁 Project Structure
+
+```text
+ecommerce-eda-sales-pipeline/
+│
+├── data/
+│   ├── raw/
+│   └── processed/
+│
+├── notebooks/
+│   └── 01_ecommerce_analysis.ipynb
+│
+├── outputs/
+│   └── figures/
+│
+├── sql/
+│   ├── 01_schema.sql
+│   ├── 02_data_quality.sql
+│   ├── 03_sales_analysis.sql
+│   ├── 04_customer_analysis.sql
+│   ├── 05_cohort_retention.sql
+│   └── 06_rfm_segmentation.sql
+│
+├── src/
+│   ├── make_data.py
+│   ├── load_db.py
+│   ├── etl.py
+│   └── __init__.py
+│
+├── .env.example
+├── .gitignore
+├── README.md
+├── requirements.txt
+└── run_pipeline.py
+```
+
+---
+
+## 🚀 How to Run
 
 ### 1. Clone Repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/Shad0wcoder/ecommerce-eda-sales-pipeline.git
 cd ecommerce-eda-sales-pipeline
+```
+
+### 2. Create Virtual Environment
+
+```bash
+python -m venv .venv
+```
+
+Activate (Windows):
+
+```bash
+.venv\Scripts\activate
+```
+
+### 3. Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Configure PostgreSQL
+
+Create a `.env` file:
+
+```env
+DATABASE_URL=postgresql+psycopg2://postgres:YOUR_PASSWORD@localhost:5432/ecommerce
+```
+
+### 5. Run Pipeline
+
+```bash
+python run_pipeline.py
+```
+
+Pipeline execution:
+
+```text
+Data Generation
+      ↓
+PostgreSQL Loading
+      ↓
+ETL & Feature Engineering
+```
+
+### 6. Run EDA Notebook
+
+```bash
+jupyter notebook
+```
+
+Open:
+
+```text
+notebooks/01_ecommerce_analysis.ipynb
+```
+
+---
+
+## 📤 Outputs
+
+| Folder             | Description                   |
+| ------------------ | ----------------------------- |
+| `data/processed/`  | Cleaned & engineered datasets |
+| `outputs/figures/` | EDA visualizations            |
+
+---
+
+## 🎯 Key Skills Demonstrated
+
+* Python
+* PostgreSQL
+* SQL
+* Pandas
+* NumPy
+* SQLAlchemy
+* ETL Pipeline Development
+* Data Cleaning
+* Feature Engineering
+* Exploratory Data Analysis
+* Data Visualization
+* Customer Segmentation
+* RFM Analysis
+* Cohort Analysis
+* Business Analytics
+
+---
+
+## 📌 Conclusion
+
+This project demonstrates a complete data analytics workflow—from synthetic data generation and relational database modeling to SQL analytics, ETL, exploratory analysis, visualization, and business insights. It is designed to showcase practical skills required for **Data Analyst** and **entry-level Data Science** roles.
+
+---
+
+## 👤 Author
+
+**Rohit Vishwakarma**
+
+GitHub: **[@Shad0wcoder](https://github.com/Shad0wcoder)**
