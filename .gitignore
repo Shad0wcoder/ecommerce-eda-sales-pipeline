@@ -1,0 +1,96 @@
+
+# Environment / Secrets
+
+
+.env
+.env.*
+!.env.example
+
+
+
+# Python
+
+
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+
+
+# Virtual Environment
+
+
+.venv/
+venv/
+env/
+ENV/
+
+
+
+# Jupyter
+
+
+.ipynb_checkpoints/
+
+
+
+# Generated Data
+
+
+data/raw/*.csv
+data/processed/*.csv
+
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+
+
+# Local Database
+
+
+database/*.db
+database/*.sqlite
+database/*.sqlite3
+
+!database/.gitkeep
+
+
+
+# Generated Outputs
+
+
+outputs/figures/*.png
+outputs/figures/*.jpg
+outputs/figures/*.jpeg
+
+outputs/reports/*.pdf
+
+!outputs/figures/.gitkeep
+
+
+
+# IDE
+
+
+.vscode/
+.idea/
+
+
+
+# OS
+
+
+.DS_Store
+Thumbs.db
+desktop.ini
+
+
+
+# Logs
+
+
+*.log
+*.tmp
+*.temp
+*.bak
