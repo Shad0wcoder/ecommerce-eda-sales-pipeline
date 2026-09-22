@@ -108,15 +108,6 @@ The project uses a normalized PostgreSQL database with five tables:
 * Purchasing behavior
 * Multi-step business queries
 
-### RFM Segmentation
-
-Customers are scored using:
-
-* **Recency**
-* **Frequency**
-* **Monetary Value**
-
-NTILE-based scoring is used to classify customer segments.
 
 ---
 
@@ -239,7 +230,6 @@ ecommerce-eda-sales-pipeline/
 │   ├── 03_sales_analysis.sql
 │   ├── 04_customer_analysis.sql
 │   ├── 05_cohort_retention.sql
-│   └── 06_rfm_segmentation.sql
 │
 ├── src/
 │   ├── make_data.py
@@ -344,7 +334,6 @@ notebooks/01_ecommerce_analysis.ipynb
 * Exploratory Data Analysis
 * Data Visualization
 * Customer Segmentation
-* RFM Analysis
 * Cohort Analysis
 * Business Analytics
 
